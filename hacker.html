@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ultimate Hacker Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Hacker Font & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Share Tech Mono', monospace;
+            background: #090f13;
+            color: #00ff41;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        #matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .glitch {
+            position: relative;
+            color: #00ff41;
+            font-size: 2.5rem;
+            letter-spacing: 0.09em;
+            font-weight: bold;
+            margin-top: 2.7rem;
+            margin-bottom: 1.3rem;
+            text-align: center;
+            text-shadow: 0 0 8px #00ff41, 0 0 24px #0ff, 1px 1px 0 #fff;
+            animation: glitch 1.7s infinite alternate;
+        }
+        
+        @keyframes glitch {
+            0% {
+                text-shadow: 2px 0 #00ff41, -2px 0 #ff00cc;
+            }
+            20% {
+                text-shadow: -1px 0 #00ff41, 2px 0 #ff00cc;
+            }
+            40% {
+                text-shadow: 0 2px #00ff41, 0 -2px #ff00cc;
+            }
+            60% {
+                text-shadow: 2px 2px #00ff41, -2px -2px #ff00cc;
+            }
+            100% {
+                text-shadow: 0 0 #00ff41, 0 0 #ff00cc;
+            }
+        }
+        
+        .main-card {
+            background: rgba(13, 18, 22, 0.88);
+            border: 2.5px solid #00ff41;
+            border-radius: 18px;
+            box-shadow: 0 0 48px #00ff41c0, 0 0 8px #fff2;
+            max-width: 530px;
+            margin: 0 auto;
+            margin-bottom: 2.2rem;
+            padding: 2.7rem 2rem 2.2rem 2rem;
+            position: relative;
+            z-index: 2;
+            animation: borderPulse 2.7s infinite alternate;
+            backdrop-filter: blur(6px);
+        }
+        
+        @keyframes borderPulse {
+            0% {
+                box-shadow: 0 0 20px #00ff41c0, 0 0 8px #fff2;
+            }
+            50% {
+                box-shadow: 0 0 90px #00ff41e0, 0 0 15px #fff4;
+            }
+            100% {
+                box-shadow: 0 0 20px #00ff41c0, 0 0 8px #fff2;
+            }
+        }
+        
+        .main-card .desc {
+            color: #fff;
+            font-size: 1.18rem;
+            line-height: 1.6;
+            margin-bottom: 2.1rem;
+            text-align: center;
+            text-shadow: 0 0 4px #00ff41bb;
+            letter-spacing: 0.04em;
+            animation: flicker 2.3s infinite alternate;
+        }
+        
+        @keyframes flicker {
+            0% {
+                opacity: 0.85;
+            }
+            20% {
+                opacity: 1;
+            }
+            40% {
+                opacity: 0.7;
+            }
+            60% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 0.92;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        .terminal {
+            background: rgba(6, 13, 8, 0.9);
+            border-radius: 8px;
+            padding: 1.1rem 1rem;
+            font-size: 1.08rem;
+            color: #00ff41;
+            box-shadow: 0 0 12px #00ff41a0;
+            margin-bottom: 1.7rem;
+            overflow-x: auto;
+            border: 1.5px solid #00ff41;
+            animation: borderPulse 2.5s infinite alternate;
+        }
+        
+        .terminal .line {
+            margin-bottom: 0.41em;
+        }
+        
+        .terminal .prompt {
+            color: #fff;
+        }
+        
+        .terminal .cmd {
+            color: #0ff;
+        }
+        
+        .terminal .action {
+            color: #ff0;
+        }
+        
+        .terminal .result {
+            color: #f0f;
+        }
+        
+        .terminal .star {
+            color: #ff0;
+        }
+        
+        .terminal .sys {
+            color: #00ff41;
+        }
+        
+        .avatar-box {
+            text-align: center;
+            margin-bottom: 1.7rem;
+        }
+        
+        .avatar-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            box-shadow: 0 0 60px #00ff41ee, 0 0 12px #fff9;
+            border: 2px solid #ff0;
+            filter: grayscale(60%) brightness(1.1) contrast(1.2);
+            transition: transform 0.5s, filter 0.35s;
+            animation: avatarPop 2.2s infinite alternate;
+        }
+        
+        .avatar-img:hover {
+            transform: scale(1.08) rotate(-4deg);
+            filter: grayscale(0%) brightness(1.25) contrast(1.35);
+            box-shadow: 0 0 120px #00ff41, 0 0 24px #ff0;
+        }
+        
+        @keyframes avatarPop {
+            to {
+                box-shadow: 0 0 120px #00ff41, 0 0 24px #ff0;
+            }
+        }
+        
+        .cta-button,
+        .channel-button,
+        .superchannel-button {
+            display: block;
+            width: 80%;
+            margin: 2.1rem auto 0 auto;
+            padding: 1em 0;
+            font-size: 1.22rem;
+            font-family: inherit;
+            font-weight: bold;
+            color: #0f0;
+            background: linear-gradient(90deg, #222 60%, #00ff41 100%);
+            border: 2px solid #ff0;
+            border-radius: 12px;
+            box-shadow: 0 0 24px #00ff41bb, 0 0 8px #fff1;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background 0.35s, box-shadow 0.35s, transform 0.35s;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            animation: borderPulse 1.7s infinite alternate;
+        }
+        
+        .cta-button:hover,
+        .channel-button:hover,
+        .superchannel-button:hover {
+            background: linear-gradient(90deg, #111 40%, #00ff41 100%);
+            color: #fff;
+            box-shadow: 0 0 48px #00ff41aa, 0 0 18px #fff5;
+            transform: scale(1.08) rotate(-1deg);
+            text-shadow: 0 0 12px #00ff41;
+            border-color: #f0f;
+        }
+        
+        .channel-button {
+            margin-top: 1rem;
+            border-color: #0ff;
+            color: #0ff;
+            background: linear-gradient(90deg, #222 60%, #0ff 100%);
+            animation: borderPulse 2.2s infinite alternate;
+        }
+        
+        .channel-button:hover {
+            background: linear-gradient(90deg, #111 40%, #0ff 100%);
+            color: #fff;
+            border-color: #ff0;
+        }
+        
+        .superchannel-button {
+            margin-top: 1rem;
+            border-color: #f0f;
+            color: #f0f;
+            background: linear-gradient(90deg, #222 60%, #f0f 100%);
+            animation: borderPulse 2.9s infinite alternate;
+        }
+        
+        .superchannel-button:hover {
+            background: linear-gradient(90deg, #111 40%, #f0f 100%);
+            color: #fff;
+            border-color: #0ff;
+        }
+        /* Section: Hacker Achievements */
+        
+        .achievements {
+            background: rgba(20, 40, 35, 0.80);
+            border-radius: 15px;
+            box-shadow: 0 0 32px #00ff41a0, 0 0 6px #fff1;
+            border: 2px dashed #0ff;
+            max-width: 530px;
+            margin: 2.2rem auto;
+            padding: 1.3rem 1.1rem 1.3rem 1.3rem;
+            animation: borderPulse 3s infinite alternate;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .achievements h2 {
+            color: #ff0;
+            font-size: 1.25rem;
+            margin-bottom: 1.1rem;
+            letter-spacing: 0.07em;
+            text-shadow: 0 0 7px #f0f, 0 0 2px #00ff41;
+            animation: flicker 2.3s infinite alternate;
+        }
+        
+        .ach-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 1.05rem;
+            color: #0ff;
+        }
+        
+        .ach-list li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.45em;
+            text-shadow: 0 0 4px #00ff41cc;
+            animation: flicker 2.7s infinite alternate;
+        }
+        
+        .ach-list li .bi {
+            font-size: 1.2em;
+            color: #ff0;
+            text-shadow: 0 0 8px #f0f, 0 0 3px #00ff41;
+            margin-right: 0.3em;
+            animation: avatarPop 2s infinite alternate;
+        }
+        /* Section: Hacker Wisdom */
+        
+        .wisdom {
+            background: rgba(10, 25, 22, 0.82);
+            border-radius: 13px;
+            box-shadow: 0 0 30px #0ff9, 0 0 8px #fff2;
+            border: 2px solid #0ff;
+            max-width: 530px;
+            margin: 2.2rem auto;
+            padding: 1.3rem 1.1rem 1.3rem 1.3rem;
+            animation: borderPulse 2.7s infinite alternate;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .wisdom h2 {
+            color: #f0f;
+            font-size: 1.15rem;
+            text-shadow: 0 0 6px #0ff, 0 0 2px #ff0;
+            margin-bottom: 1.1rem;
+            animation: flicker 1.7s infinite alternate;
+        }
+        
+        .wis-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.98rem;
+            color: #fff;
+        }
+        
+        .wis-list li {
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.45em;
+            text-shadow: 0 0 4px #0ff;
+        }
+        
+        .wis-list li .bi {
+            font-size: 1.15em;
+            color: #00ff41;
+            text-shadow: 0 0 6px #f0f, 0 0 2px #ff0;
+            margin-right: 0.2em;
+            animation: flicker 1.8s infinite alternate;
+        }
+        /* Responsive */
+        
+        @media (max-width: 700px) {
+            .main-card,
+            .achievements,
+            .wisdom {
+                max-width: 97vw;
+                padding: 1.3rem 0.6rem 1.2rem 0.6rem;
+            }
+            .avatar-img {
+                width: 90vw;
+                min-width: 90px;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="matrix"></canvas>
+    <div class="glitch">KAKASHI HACKS</div>
+    <div class="main-card">
+        <div class="desc">
+            <span style="color:#ff0;">Welcome to KAKASHI site</span>.<br>
+            <span style="color:#0ff;">Unleash your potential</span>, break the boundaries, and join the <span style="color:#f0f;">legendary</span> crew.<br>
+            <span style="color:#00ff41;">Are you ready to breach the matrix?</span>
+        </div>
+        <div class="avatar-box">
+            <img class="avatar-img" src="c:\Users\PATOR EMMANUEL\Downloads\kakashi hatake - icon.jpeg" alt="Hacker Avatar">
+        </div>
+        <div class="terminal">
+            <div class="line"><span class="prompt">$</span> <span class="cmd">sudo apt-get install</span> <span class="action">kakashihacks</span></div>
+            <div class="line"><span class="prompt">&gt;</span> <span class="sys">Injecting code...</span> <span class="star">★★★</span></div>
+            <div class="line"><span class="prompt">&gt;</span> <span class="result">Success!</span> <span class="action">You're in the system.</span></div>
+            <div class="line"><span class="prompt">$</span> <span class="cmd">curl</span> <span class="action">-L</span> <span class="sys">https://t.me/KakashixPM</span></div>
+        </div>
+        <a class="cta-button" href="https://t.me/KakashixPM" target="_blank">
+            <i class="bi bi-terminal"></i> GET STARTED ON TELEGRAM
+        </a>
+        <a class="channel-button" href="https://t.me/legithackshere" target="_blank">
+            <i class="bi bi-chat-left-text"></i> JOIN TELEGRAM CHANNEL
+        </a>
+        <a class="superchannel-button" href="https://t.me/+JkSc2A21WrkwMTI1" target="_blank">
+            <i class="bi bi-link-45deg"></i> JOIN EXCLUSIVE HACKER SUPERCHANNEL
+        </a>
+    </div>
+    <div class="achievements">
+        <h2><i class="bi bi-award"></i> Hacker Achievements</h2>
+        <ul class="ach-list">
+            <li><i class="bi bi-cpu"></i> 10,000+ hours uptime on the grid</li>
+            <li><i class="bi bi-lightning-fill"></i> Infinite lines of code written</li>
+            <li><i class="bi bi-bug"></i> Exploits discovered: <span style="color:#f0f;">42</span></li>
+            <li><i class="bi bi-shield-lock"></i> Firewalls bypassed: <span style="color:#ff0;">Classified</span></li>
+            <li><i class="bi bi-emoji-sunglasses"></i> Enthusiasm level: <span style="color:#0ff;font-weight:bold;">Over 9000!</span></li>
+        </ul>
+    </div>
+    <div class="wisdom">
+        <h2><i class="bi bi-lightbulb"></i> Hacker Wisdom</h2>
+        <ul class="wis-list">
+            <li><i class="bi bi-arrow-right-circle"></i> Stay curious, always break the mold.</li>
+            <li><i class="bi bi-arrow-right-circle"></i> The command line is your playground.</li>
+            <li><i class="bi bi-arrow-right-circle"></i> Patch, protect, and innovate.</li>
+            <li><i class="bi bi-arrow-right-circle"></i> Connect with minds as sharp as yours.</li>
+            <li><i class="bi bi-arrow-right-circle"></i> Hack with heart—and responsibility.</li>
+        </ul>
+    </div>
+    <script>
+        // Matrix effect background
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        let w = window.innerWidth;
+        let h = window.innerHeight;
+        canvas.width = w;
+        canvas.height = h;
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+        const fontSize = 18;
+        const columns = Math.floor(w / fontSize);
+        const drops = Array(columns).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(9, 15, 19, 0.18)';
+            ctx.fillRect(0, 0, w, h);
+            ctx.font = fontSize + "px 'Share Tech Mono', monospace";
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillStyle = (Math.random() > 0.97) ? '#fff' : '#00ff41';
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > h && Math.random() > 0.93) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 55);
+
+        window.addEventListener('resize', () => {
+            w = window.innerWidth;
+            h = window.innerHeight;
+            canvas.width = w;
+            canvas.height = h;
+        });
+    </script>
+</body>
+
+</html>
